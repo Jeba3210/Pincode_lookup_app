@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { CiSearch } from "react-icons/ci";
+import "./Lookup.css"
 
 // import ShowDetails from './ShowDetails';
 
