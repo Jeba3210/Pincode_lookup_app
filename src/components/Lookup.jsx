@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { CiSearch } from "react-icons/ci";
+import { FaSearch } from "react-icons/fa";
 import "./Lookup.css"
+// import Showdetails from".ShowDetails.jsx"
 
-// import ShowDetails from './ShowDetails';
+import ShowDetails from './ShowDetails';
 
 function Lookup({pincode , response }) {
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
+  const [filter , SetFilter] = useState();
 
   useEffect(() =>{
     console.log(response.data[0].Message);
@@ -23,28 +25,22 @@ function Lookup({pincode , response }) {
   
   
    <div>
-    <h1>Pincode: {pincode}</h1>
-    <span><h2>Message:</h2><h5>{response.data[0].Message}</h5></span>
-    <div className='search'><CiSearch /><input type="text" placeholder='Filter' /></div>
+    <div id="header">
+        <h1>Pincode: {pincode}</h1>
+        <span className='span'><h2>Message:</h2><p>{response.data[0].Message}</p></span>
+        <div className='search'><FaSearch /><input id='input' type="text" placeholder='Filter' /></div>
+    </div>
+   
+    <div id='div_container'>
     {
-      data && data.map((details , index) => {
-        return(
-          <div id='details' key={index}>
-          <p>Name : {details.Name}</p>
-          <p>Branch Type : {details.BranchType}</p>
-          <p>Delivery Status : {details.DeliveryStatus}</p>
-          <p>District : {details.District}</p>
-          <p>Division : {details.Division}</p>
-      </div>
-        )
-      })
+      data && data.map((details , index) => <ShowDetails key={index} name={details.Name} branchType={details.BranchType} deliveryStatus={details.DeliveryStatus} district={details.District} division={details.Division}/>)
     
 
     }
+    </div>
     
   </div>
  
-   
     
   )
 }
