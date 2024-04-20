@@ -2,25 +2,26 @@ import { useState }    from 'react'
 import "../App.css"
 import axios from 'axios';
 import Lookup from './Lookup';
-import showDetails from './showDetails';
+
 
 function App() {
   const [pincode , setPincode] = useState(0);
   const [isLookup , setIsLookup] = useState(false);
   const [response, setResponse] = useState({ apiStatus: 0, data: null });
-  const [isApiLoaded, setIsApiLoaded] = useState(false);
+  // const [isApiLoaded, setIsApiLoaded] = useState(false);
   // console.log(pincode);
-  // console.log(response);
-
+  
   const fetchData = async () => {
     try {
       setResponse({...response , apiStatus : 1});
       const serverResponse = await axios(`https://api.postalpincode.in/pincode/${pincode}`);
+      console.log(serverResponse.data);
       setResponse({apiStatus : 2 , data : serverResponse});
       
     } catch (error) {
       setResponse({...response , apiStatus : 3})
-      return({error});
+      console.log(error);
+     
     }
   }
   
@@ -39,29 +40,36 @@ function App() {
     )
   }
 
-  if(response.apiStatus === 2){
-    setIsApiLoaded(true);
+  
+
+  else if(response.apiStatus === 3){
+  return(
+    <h1>error</h1>
+  )
   }
 
   
-
+else{
   return (<>
 
-   { isLookup ? <Lookup pincode={pincode} response={response} isApiLoad={isApiLoaded}/> : <div id='main_container'>
-      <form >
-        <label htmlFor="pincode"><h2>Enter Pincode</h2></label>
-        <input type="number" 
-               id='pincode' 
-               placeholder='Pincode' 
-               onChange={(e) => {setPincode(e.target.value)}}
-        />
-        <div id='btn_div'>
-          <button id='btn'  type='button' onClick={implementSubmit}>Lookup</button>
-        </div>
-      </form>
-    </div>}
-    </>
-  )
+    { isLookup ? <Lookup pincode={pincode} response={response.data} /> : <div id='main_container'>
+       <form >
+         <label htmlFor="pincode"><h2>Enter Pincode</h2></label>
+         <input type="number" 
+                id='pincode' 
+                placeholder='Pincode' 
+                onChange={(e) => {setPincode(e.target.value)}}
+         />
+         <div id='btn_div'>
+           <button id='btn'  type='button' onClick={implementSubmit}>Lookup</button>
+         </div>
+       </form>
+     </div>
+    }
+     </>
+   )
+ }
 }
+ 
 
 export default App
