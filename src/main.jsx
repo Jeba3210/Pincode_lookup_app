@@ -2,6 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './components/App.jsx'
 import './index.css'
+import "./component/App.css"
+import "./component/Lookup.css"
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(

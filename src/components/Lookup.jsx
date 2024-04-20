@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { CiSearch } from "react-icons/ci";
+
 // import ShowDetails from './ShowDetails';
 
 function Lookup({pincode , response }) {
@@ -27,7 +28,7 @@ function Lookup({pincode , response }) {
     {
       data && data.map((details , index) => {
         return(
-          <div key={index}>
+          <div id='details' key={index}>
           <p>Name : {details.Name}</p>
           <p>Branch Type : {details.BranchType}</p>
           <p>Delivery Status : {details.DeliveryStatus}</p>
